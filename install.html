@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#dfe8ff">
+<title>Install ZimPro-Linkup</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZimPro-Linkup">
+<meta property="og:title" content="Install ZimPro-Linkup on your phone">
+<meta property="og:description" content="Zimbabwe's free marketplace for jobs, services & properties. Tap to install the app, it takes 10 seconds.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ZimPro">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#141a33}
+body{
+  min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;position:relative;overflow-x:hidden;
+  padding:calc(22px + env(safe-area-inset-top,0px)) 16px calc(22px + env(safe-area-inset-bottom,0px));
+  background:
+    radial-gradient(60% 45% at 8% 5%,rgba(130,170,255,.95) 0,rgba(130,170,255,0) 62%),
+    radial-gradient(55% 40% at 96% 14%,rgba(205,150,255,.9) 0,rgba(205,150,255,0) 64%),
+    radial-gradient(65% 50% at 92% 97%,rgba(100,232,206,.8) 0,rgba(100,232,206,0) 62%),
+    radial-gradient(55% 45% at 3% 93%,rgba(255,170,212,.7) 0,rgba(255,170,212,0) 62%),
+    linear-gradient(160deg,#dfe8ff 0%,#efe5ff 55%,#d9f6ec 100%);
+  background-attachment:fixed;
+}
+/* soft glass bubbles in the background (decoration only) */
+.bub{position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle at 30% 26%,rgba(255,255,255,.95) 0,rgba(255,255,255,.35) 38%,rgba(255,255,255,.08) 70%);
+  border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 -8px 18px rgba(120,130,255,.15),0 10px 30px rgba(90,100,200,.12)}
+.b1{width:120px;height:120px;left:-34px;top:11%}
+.b2{width:70px;height:70px;right:8%;top:6%}
+.b3{width:150px;height:150px;right:-50px;bottom:12%}
+.b4{width:54px;height:54px;left:10%;bottom:6%}
+
+.card{
+  position:relative;z-index:1;width:100%;max-width:410px;text-align:center;padding:30px 22px 22px;border-radius:34px;
+  background:linear-gradient(145deg,rgba(255,255,255,.78),rgba(255,255,255,.40));
+  border:1px solid rgba(255,255,255,.92);
+  -webkit-backdrop-filter:blur(26px) saturate(185%);backdrop-filter:blur(26px) saturate(185%);
+  box-shadow:0 26px 64px rgba(70,80,170,.28),0 4px 14px rgba(70,80,170,.10),inset 0 1.5px 0 rgba(255,255,255,.98),inset 0 -1px 0 rgba(255,255,255,.45);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.card{background:rgba(255,255,255,.9)}}
+
+.logo{width:108px;height:108px;margin:0 auto 16px;padding:7px;border-radius:32px;position:relative;
+  background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,255,255,.5));
+  border:1px solid rgba(255,255,255,.98);
+  box-shadow:0 18px 40px rgba(84,104,255,.40),0 4px 10px rgba(84,104,255,.18),inset 0 2px 0 #fff,inset 0 -3px 8px rgba(120,130,255,.18)}
+.logo img{width:100%;height:100%;display:block;border-radius:25px;object-fit:cover}
+h1{margin:0 0 6px;font-size:25px;line-height:1.2;font-weight:800;letter-spacing:-.2px;color:#141a33}
+.sub{margin:0 0 18px;font-size:14.5px;line-height:1.55;color:#464e72}
+
+.perks{list-style:none;margin:0 0 18px;padding:0;text-align:left;font-size:14.5px;font-weight:600;color:#2b3157}
+.perks li{display:flex;gap:11px;align-items:center;line-height:1.35;padding:11px 13px;margin-bottom:8px;border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.80),rgba(255,255,255,.48));border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 6px 16px rgba(70,80,170,.08),inset 0 1px 0 rgba(255,255,255,.95)}
+.ck{flex:0 0 24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;
+  background:linear-gradient(135deg,#5468FF,#7B45F0);box-shadow:0 4px 10px rgba(98,92,255,.4)}
+
+.btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:58px;border:0;border-radius:20px;
+  color:#fff;font-size:18px;font-weight:800;letter-spacing:.2px;cursor:pointer;text-decoration:none;font-family:inherit;
+  background:linear-gradient(135deg,#5468FF 0%,#7B45F0 100%);
+  box-shadow:0 16px 32px rgba(98,92,255,.46),0 3px 8px rgba(98,92,255,.28),inset 0 1.5px 0 rgba(255,255,255,.55),inset 0 -3px 8px rgba(60,30,170,.28)}
+.btn::before{content:'';position:absolute;left:0;right:0;top:0;height:52%;border-radius:20px 20px 60% 60%/20px 20px 16px 16px;background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,.04));pointer-events:none}
+.btn:active{filter:brightness(.95)}
+.btn.ghost{min-height:48px;font-size:15px;font-weight:700;color:#3a40c8;border-radius:16px;
+  background:linear-gradient(145deg,rgba(255,255,255,.85),rgba(255,255,255,.5));border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 8px 18px rgba(70,80,170,.12),inset 0 1px 0 #fff}
+.btn.ghost::before{display:none}
+.btn[disabled]{opacity:.7}
+.row{display:flex;gap:10px;margin-top:10px}
+
+.steps{margin:14px 0 0;padding:0;list-style:none;text-align:left;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:12px 13px;border-radius:16px;margin-bottom:8px;font-size:14.5px;line-height:1.45;color:#232a52;
+  background:linear-gradient(145deg,rgba(255,255,255,.80),rgba(255,255,255,.46));border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 6px 16px rgba(70,80,170,.08),inset 0 1px 0 rgba(255,255,255,.95)}
+.steps li::before{content:counter(s);flex:0 0 26px;height:26px;border-radius:50%;color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px;
+  background:linear-gradient(135deg,#5468FF,#7B45F0);box-shadow:0 4px 10px rgba(98,92,255,.4)}
+.steps svg{display:inline-block;vertical-align:-5px;width:22px;height:22px;margin:0 2px;color:#5468FF}
+.hl{animation:hl 1.2s ease 2}
+@keyframes hl{50%{box-shadow:0 0 0 4px rgba(84,104,255,.32)}}
+.lead{margin:16px 0 0;font-size:13.5px;font-weight:800;color:#2b3157;text-align:left}
+
+.warn,.ok{border-radius:16px;padding:13px 14px;font-size:14.5px;line-height:1.5;text-align:left;margin-bottom:14px;
+  box-shadow:0 6px 16px rgba(70,80,170,.08),inset 0 1px 0 rgba(255,255,255,.9)}
+.warn{background:linear-gradient(145deg,rgba(255,244,214,.88),rgba(255,236,190,.55));border:1px solid rgba(255,255,255,.95);color:#6b4300}
+.ok{background:linear-gradient(145deg,rgba(220,250,236,.9),rgba(196,242,222,.55));border:1px solid rgba(255,255,255,.95);color:#10502d;text-align:center;font-weight:600}
+.busy{display:flex;align-items:center;justify-content:center;gap:10px}
+.spin{width:18px;height:18px;border-radius:50%;border:3px solid rgba(255,255,255,.45);border-top-color:#fff;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+.small{margin-top:14px;font-size:13px;line-height:1.5;color:#59608a}
+.small a,.link{color:#3a40c8;font-weight:700;text-decoration:none;background:none;border:0;font:inherit;font-weight:700;cursor:pointer;padding:0}
+.chk{margin-top:14px;text-align:left;font-size:12.5px;line-height:1.55;color:#3a4170;padding:12px 14px;border-radius:16px;
+  background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.95)}
+.chk b{color:#141a33}
+.bad{color:#b4232c;font-weight:700}.good{color:#127a45;font-weight:700}
+</style>
+</head>
+<body>
+<div class="bub b1"></div><div class="bub b2"></div><div class="bub b3"></div><div class="bub b4"></div>
+<div class="card" id="card">
+  <div class="logo"><img src="data:image/png;base64,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" alt="ZimPro"></div>
+  <h1>Install ZimPro-Linkup</h1>
+  <p class="sub" id="sub">Get the app on your phone. It opens like any other app, straight from your home screen.</p>
+  <div id="view"></div>
+  <noscript><a class="btn" href="./">Open ZimPro</a></noscript>
+</div>
+
+<script>
+(function(){
+  /* >>> The address of your app. './' means "the main page in this same folder", the same address people open when you share your link.
+         If your app lives at a different address, put the full link here, for example 'https://yourdomain.com/'. */
+  var APP_URL = './';
+
+  var ua = navigator.userAgent || '';
+  var view = document.getElementById('view'), sub = document.getElementById('sub');
+  var deferred = null, installedNow = false, startedAt = Date.now(), waiters = [];
+  var DEBUG = /[?&]debug\b/.test(location.search);
+
+  /* ---------- what are we running in? ---------- */
+  var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isAndroid = /Android/i.test(ua);
+  var isMobile = isIOS || isAndroid || /Mobi/i.test(ua);
+  var inAppName = '';
+  if(/FBAN|FBAV|FB_IAB|FBIOS/.test(ua)) inAppName = 'Facebook';
+  else if(/Instagram/.test(ua)) inAppName = 'Instagram';
+  else if(/WhatsApp/.test(ua)) inAppName = 'WhatsApp';
+  else if(/TikTok|musical_ly|BytedanceWebview/.test(ua)) inAppName = 'TikTok';
+  else if(/Snapchat/.test(ua)) inAppName = 'Snapchat';
+  else if(/LinkedInApp/.test(ua)) inAppName = 'LinkedIn';
+  else if(/Twitter/.test(ua)) inAppName = 'X (Twitter)';
+  else if(/Line\//.test(ua)) inAppName = 'LINE';
+  else if(/MicroMessenger/.test(ua)) inAppName = 'WeChat';
+  else if(isAndroid && /; wv\)/.test(ua)) inAppName = 'this app';
+  else if(isIOS && !/Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua)) inAppName = 'this app';
+  var isSamsung = /SamsungBrowser/.test(ua), isFirefox = /Firefox|FxiOS/.test(ua), isOpera = /OPR\/|OPT\/|Opera/.test(ua), isEdge = /EdgA|EdgiOS|Edge\//.test(ua), isUC = /UCBrowser/.test(ua);
+  var isIOSSafari = isIOS && /Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua) && !inAppName;
+  var isIOSOther = isIOS && !isIOSSafari && !inAppName;
+
+  function standalone(){ return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
+  function flagGet(){ try{ return localStorage.getItem('zpl_installed') === '1'; }catch(e){ return false; } }
+  function flagSet(v){ try{ if(v) localStorage.setItem('zpl_installed','1'); else localStorage.removeItem('zpl_installed'); }catch(e){} }
+
+  /* ---------- tiny inline icons (no outside files needed) ---------- */
+  var ICON = {
+    share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>',
+    dots:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>',
+    plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/></svg>',
+    menu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    dl:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;position:relative"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>'
+  };
+  function B(t){ return '<b>' + t + '</b>'; }
+
+  /* ---------- step lists for each browser ---------- */
+  function steps(){
+    if(isIOSSafari) return [
+      'Tap the ' + B('Share') + ' button ' + ICON.share + ' (bottom of Safari, or top right on iPad).',
+      'Scroll down and tap ' + B('Add to Home Screen') + ' ' + ICON.plus,
+      'Tap ' + B('Add') + ' (top right). The ZimPro icon is now on your home screen.'];
+    if(isIOSOther) return [
+      'Tap the ' + B('Share') + ' button ' + ICON.share + ' in your browser.',
+      'Tap ' + B('Add to Home Screen') + ' ' + ICON.plus + ', then ' + B('Add') + '.',
+      'If you cannot see it, open this page in ' + B('Safari') + ' and repeat the steps.'];
+    if(isSamsung) return [
+      'Tap the ' + B('menu') + ' ' + ICON.menu + ' at the bottom right.',
+      'Tap ' + B('Add page to') + ', then ' + B('Home screen') + '. (Or tap the install icon in the address bar.)',
+      'Tap ' + B('Add') + '. The ZimPro icon is now on your home screen.'];
+    if(isFirefox) return [
+      'Tap the ' + B('menu') + ' ' + ICON.dots + ' (three dots).',
+      'Tap ' + B('Install') + ' (or ' + B('Add to Home screen') + ').',
+      'Tap ' + B('Add') + '. The ZimPro icon is now on your home screen.'];
+    if(isOpera) return [
+      'Tap the ' + B('menu') + ' ' + ICON.dots + '.',
+      'Tap ' + B('Home screen') + ' (or ' + B('Add to Home screen') + ').',
+      'Tap ' + B('Add') + '. The ZimPro icon is now on your home screen.'];
+    if(isEdge) return [
+      'Tap the ' + B('menu') + ' ' + ICON.dots + ' at the bottom (three dots).',
+      'Tap ' + B('Add to phone') + ' (or ' + B('Install') + ').',
+      'Tap ' + B('Install') + '. The ZimPro icon is now on your home screen.'];
+    if(isAndroid) return [
+      'Tap the ' + B('menu') + ' ' + ICON.dots + ' at the top right of your browser.',
+      'Tap ' + B('Add to Home screen') + ' (or ' + B('Install app') + ').',
+      'If it asks, choose ' + B('Install') + ' or ' + B('Create shortcut') + ', then tap ' + B('Add') + '. The ZimPro icon is now on your home screen.'];
+    if(isMobile) return [
+      'Open your browser ' + B('menu') + ' ' + ICON.dots + '.',
+      'Look for ' + B('Add to Home screen') + ' or ' + B('Install app') + ' and tap it.',
+      'Confirm. The ZimPro icon is now on your home screen.'];
+    return [
+      'In ' + B('Chrome') + ' or ' + B('Edge') + ', click the install icon at the right end of the address bar.',
+      'Click ' + B('Install') + '.',
+      'Tip: for the phone app, open this same link on your phone.'];
+  }
+  function stepsHTML(lead){ return '<div class="lead">' + (lead || 'Do these 3 quick steps:') + '</div><ul class="steps" id="steps">' + steps().map(function(s){ return '<li><span>' + s + '</span></li>'; }).join('') + '</ul>'; }
+
+  /* ---------- helpers ---------- */
+  function copyLink(btn){
+    var url = location.href.split('#')[0].split('?')[0], done = function(){ btn.textContent = 'Link copied \u2713'; setTimeout(function(){ btn.textContent = 'Copy link'; }, 2200); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(done, fallback); } else fallback();
+    function fallback(){ try{ var t = document.createElement('textarea'); t.value = url; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); done(); }catch(e){ prompt('Copy this link and open it in your browser:', url); } }
+  }
+  function chromeIntent(){
+    var u = location.href.split('#')[0];
+    return 'intent://' + location.host + location.pathname + location.search + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(u) + ';end';
+  }
+  function openLink(){ return '<div class="small">or <a href="' + APP_URL + '">open ZimPro in this browser</a></div>'; }
+  function waitForPrompt(ms){            /* resolves with the install prompt if the browser offers it within ms */
+    return new Promise(function(res){
+      if(deferred) return res(deferred);
+      var t = setTimeout(function(){ waiters = waiters.filter(function(w){ return w !== fn; }); res(null); }, ms);
+      var fn = function(d){ clearTimeout(t); res(d); }; waiters.push(fn);
+    });
+  }
+
+  /* ---------- screens ---------- */
+  function showInstalled(already){
+    sub.textContent = '';
+    view.innerHTML = '<div class="ok">' + (already ? 'ZimPro is already installed on this phone.' : 'Done! ZimPro is on your phone. Look for the ZimPro icon on your home screen.') + '</div>' +
+      '<a class="btn" href="' + APP_URL + '">Open ZimPro</a>' +
+      (already ? '<div class="small">Not on your home screen? <button class="link" id="again" type="button">Show install steps</button></div>' : '');
+    var a = document.getElementById('again'); if(a) a.onclick = function(){ flagSet(false); render(); };
+  }
+  function showInApp(){
+    var android = isAndroid;
+    sub.textContent = '';
+    view.innerHTML = '<div class="warn"><b>You are inside ' + (inAppName === 'this app' ? 'another app' : inAppName) + '.</b> Phones cannot install apps from here. Open this page in your normal browser first, then tap Install.</div>' +
+      (android ? '<a class="btn" id="openChrome" href="' + chromeIntent() + '">Open in Chrome</a>' : '') +
+      '<ul class="steps" style="margin-top:' + (android ? '14' : '0') + 'px"><li><span>Tap the ' + (isIOS ? B('\u2026') + ' or ' + B('Share') + ' icon' : B('\u22EE') + ' menu') + ' at the top or bottom of this screen.</span></li>' +
+      '<li><span>Choose ' + B(isIOS ? 'Open in Safari' : 'Open in Chrome / Open in browser') + '.</span></li>' +
+      '<li><span>On the next page tap ' + B('Install App') + '.</span></li></ul>' +
+      '<div class="row"><button class="btn ghost" id="copy" type="button">Copy link</button></div>';
+    document.getElementById('copy').onclick = function(){ copyLink(this); };
+  }
+  function showMain(){
+    sub.textContent = 'Get the app on your phone. It opens like any other app, straight from your home screen.';
+    var expectNative = !isIOS && !isFirefox && !isUC && !isOpera;      /* browsers that can show the one-tap prompt */
+    view.innerHTML =
+      '<ul class="perks"><li><span class="ck">\u2713</span>One tap from your home screen</li><li><span class="ck">\u2713</span>Free, and it takes about 10 seconds</li></ul>' +
+      '<button class="btn" id="go" type="button">' + ICON.dl + '<span id="goT">Install App</span></button>' +
+      '<div id="note" class="small" style="margin-top:12px"></div>' +
+      '<div id="stepsWrap">' + (expectNative ? '' : stepsHTML()) + '</div>' +
+      openLink() +
+      (isAndroid ? '<div class="small" style="margin-top:6px"><a id="openChrome" href="' + chromeIntent() + '">Open in Chrome</a> if install does not start</div>' : '') +
+      '<div id="dbg"></div>';
+    var go = document.getElementById('go'), goT = document.getElementById('goT'), note = document.getElementById('note'), wrap = document.getElementById('stepsWrap');
+    function reset(){ go.disabled = false; goT.textContent = 'Install App'; }
+    function revealSteps(msg, lead){
+      if(!document.getElementById('steps')) wrap.innerHTML = stepsHTML(lead);
+      note.textContent = msg || '';
+      var st = document.getElementById('steps'); st.classList.remove('hl'); void st.offsetWidth; st.classList.add('hl');
+      st.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+    function runPrompt(d){
+      deferred = null; go.disabled = true; goT.textContent = 'Installing\u2026';
+      var p; try{ p = d.prompt(); }catch(e){ reset(); revealSteps('Your phone needs one more step. Follow these quick steps instead.', 'Install from your browser menu:'); return; }
+      d.userChoice.then(function(c){
+        if(c && c.outcome === 'accepted'){
+          flagSet(true);
+          /* Chrome finishes the install in the background. If it never reports back, offer the shortcut method. */
+          view.innerHTML = '<div class="ok">Installing ZimPro on your phone. This can take a few seconds. Then look for the ZimPro icon on your home screen.</div><a class="btn" href="' + APP_URL + '">Open ZimPro</a><div class="small" id="late"></div>';
+          setTimeout(function(){
+            if(installedNow) return;
+            var l = document.getElementById('late'); if(!l) return;
+            l.innerHTML = 'No icon yet? Your phone may have blocked the full install. <button class="link" id="alt" type="button">Add it to your home screen instead</button>';
+            document.getElementById('alt').onclick = function(){ flagSet(false); render(); setTimeout(function(){ var g = document.getElementById('go'); if(g){ revealStepsGlobal('This works on every phone, even when the full install is blocked.', 'Add it to your home screen:'); } }, 50); };
+          }, 9000);
+        } else { reset(); note.textContent = 'No problem. Tap Install App whenever you are ready.'; }
+      }, function(){ reset(); revealSteps('Your phone needs one more step. Follow these quick steps instead.', 'Install from your browser menu:'); });
+    }
+    window.revealStepsGlobal = revealSteps;
+    go.onclick = function(){
+      if(deferred){ runPrompt(deferred); return; }
+      if(isIOS){ revealSteps('Apple phones install from the Share button. Follow the steps below.'); return; }
+      if(expectNative && Date.now() - startedAt < 8000){
+        /* the browser has not announced install support yet: wait a moment, then start the install automatically */
+        go.disabled = true; goT.innerHTML = '<span class="spin"></span>Getting ready\u2026';
+        waitForPrompt(4000).then(function(d){ if(d) runPrompt(d); else { reset(); revealSteps('Your browser installs from its menu. Follow the steps below.'); } });
+        return;
+      }
+      revealSteps('Your browser installs from its menu. Follow the steps below.');
+    };
+    if(DEBUG) selfCheck(document.getElementById('dbg'));
+  }
+
+  /* ---------- install self-check (open install.html?debug=1 on a phone that says "cannot be installed") ---------- */
+  function selfCheck(box){
+    var out = [], link = document.querySelector('link[rel=manifest]'), mUrl = link ? new URL(link.getAttribute('href'), location.href).href : null;
+    function line(ok, t){ out.push('<div class="' + (ok ? 'good' : 'bad') + '">' + (ok ? '\u2713 ' : '\u2717 ') + t + '</div>'); box.innerHTML = '<div class="chk"><b>Install self-check</b>' + out.join('') + '</div>'; }
+    line(location.protocol === 'https:' || location.hostname === 'localhost', 'Page is served over https');
+    line(!!mUrl, 'Page links a manifest');
+    line('serviceWorker' in navigator, 'Browser supports service workers');
+    if(!mUrl) return;
+    fetch(mUrl, { cache:'no-store' }).then(function(r){ line(r.ok, 'manifest.webmanifest loads (HTTP ' + r.status + ')'); return r.json(); }).then(function(m){
+      line(!!(m.name || m.short_name), 'Has a name');
+      line(!!m.start_url, 'Has start_url (' + m.start_url + ')');
+      line(['standalone','fullscreen','minimal-ui'].indexOf(m.display) > -1, 'display is standalone (' + m.display + ')');
+      var ic = m.icons || [], has = function(n){ return ic.some(function(i){ return (i.sizes || '').split(' ').indexOf(n + 'x' + n) > -1 || (i.sizes || '').toLowerCase() === 'any'; }); };
+      line(has(192), 'Has a 192x192 icon'); line(has(512), 'Has a 512x512 icon (needed for a full install)');
+      line(ic.some(function(i){ return /maskable/.test(i.purpose || ''); }), 'Has a maskable icon (recommended)');
+      ic.forEach(function(i){ var im = new Image(); im.onload = function(){ line(true, 'Icon loads: ' + i.src); }; im.onerror = function(){ line(false, 'Icon FAILS to load: ' + i.src); }; im.src = new URL(i.src, mUrl).href; });
+    }).catch(function(e){ line(false, 'Could not read the manifest: ' + e); });
+  }
+
+  function render(){
+    if(standalone()){ flagSet(true); sub.textContent = ''; view.innerHTML = '<div class="ok">Opening ZimPro\u2026</div><a class="btn" href="' + APP_URL + '">Open ZimPro</a>'; location.replace(APP_URL); return; }
+    if(inAppName){ showInApp(); return; }
+    if(flagGet() && !deferred){ showInstalled(true); return; }
+    showMain();
+  }
+
+  /* ---------- install events ---------- */
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault(); deferred = e;
+    if(flagGet()){ flagSet(false); }                 /* the browser offers install, so it is not installed any more */
+    var w = waiters.slice(); waiters = []; w.forEach(function(f){ f(e); });
+    if(!standalone() && !inAppName && !document.getElementById('go')) render();
+  });
+  window.addEventListener('appinstalled', function(){ installedNow = true; deferred = null; flagSet(true); showInstalled(false); });
+
+  /* a service worker next to the app helps Chrome treat it as installable (same file the app already uses) */
+  try{ if('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('firebase-messaging-sw.js', { updateViaCache:'none' }).catch(function(){}); }catch(e){}
+
+  /* Chrome can tell us if the app is already on this phone */
+  try{ if(navigator.getInstalledRelatedApps){ navigator.getInstalledRelatedApps().then(function(a){ if(a && a.length && !installedNow){ flagSet(true); if(!deferred) render(); } }).catch(function(){}); } }catch(e){}
+
+  render();
+})();
+</script>
+</body>
+</html>
