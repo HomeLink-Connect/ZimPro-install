@@ -5818,12 +5818,12 @@ window.addEventListener('pagehide', () => { if(call) endCall('', true); });
 /* ============================================================
    BACKGROUND ALERTS — system notifications for calls & messages.
    Tab minimised/in background: works right away (needs firebase-messaging-sw.js beside index.html).
-   App fully closed: also needs FCM_VAPID_KEY below + the Cloud Functions in /functions.
+   App fully closed: also needs FCM_VAPID_KEY below + the free Cloudflare Worker (push-worker.js) — paste its URL into PUSH_ENDPOINT.
    ============================================================ */
 const FCM_VAPID_KEY = 'BKPALciNVArwUOwtSNCcC-7uSPs4FHqJNjXcqJH-9EhNMb37QVYbkKQzsPKUKRypEmszIOCy1kFf3556t-jtCig'; // Firebase console → Project settings → Cloud Messaging → Web Push certificates → Key pair
 /* Where the push server lives. On Netlify hosting leave it as is. On GitHub Pages put the full address of the
    push server here, e.g. 'https://zimpro-push.netlify.app/.netlify/functions/push' (see the push-server README). */
-const PUSH_ENDPOINT = window.ZPL_PUSH_ENDPOINT || 'PASTE_YOUR_WORKER_URL_HERE';   /* e.g. 'https://zimpro-push.YOURNAME.workers.dev' */
+const PUSH_ENDPOINT = window.ZPL_PUSH_ENDPOINT || 'https://zimpropush.softwareengineerarno.workers.dev';   /* e.g. 'https://zimpro-push.YOURNAME.workers.dev' */
 async function pushRemote(payload){
   try{
     if(!/^https?:\/\//.test(PUSH_ENDPOINT)) return;   /* push server address not set yet */
