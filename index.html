@@ -4845,6 +4845,8 @@ function updateChatBadge(){
   const el = document.getElementById('bnavChatBadge');
   if(el){ el.textContent = n > 99 ? '99+' : n; el.classList.toggle('hidden', !n); }
   document.title = n ? `(${n > 99 ? '99+' : n}) ${BASE_TITLE}` : BASE_TITLE;
+  /* number on the home-screen icon (installed app) */
+  try{ if(navigator.setAppBadge){ (n > 0 ? navigator.setAppBadge(n) : navigator.clearAppBadge()).catch(() => {}); } }catch(e){}
 }
 
 /* ---- call log in the chat ---- */
