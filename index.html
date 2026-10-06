@@ -15,7 +15,7 @@
      replacing YOUR-DOMAIN with your real domain. WhatsApp/Facebook only accept a hosted https image here. -->
 <!-- <meta property="og:image" content="https://YOUR-DOMAIN/share-card.jpg"> -->
 <!-- <meta name="twitter:image" content="https://YOUR-DOMAIN/share-card.jpg"> -->
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1456,8 +1456,7 @@ html[data-theme=light] body,html[data-theme=emerald] body{background:var(--bg);}
 html[data-theme=dark] .chat-menu{background:var(--surface);}
 .my-cover{align-self:stretch;margin:-20px -16px 4px;height:140px;background:linear-gradient(135deg,#1877F2,#0B3D91) center/cover no-repeat;position:relative;}
 .my-cover .cv-btn{position:absolute;right:12px;bottom:12px;border:0;border-radius:99px;padding:8px 14px;background:rgba(0,0,0,.5);color:#fff;font:600 12px 'Inter',sans-serif;display:flex;gap:6px;align-items:center;cursor:pointer;}
-.lm-me{background:none !important;border:0 !important;box-shadow:none !important;width:auto !important;height:auto !important;animation:none !important;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));}
-.lm-me span{display:none !important;}
+.lm-me{background:#1877F2 !important;border:3px solid #fff !important;border-radius:50% !important;width:18px !important;height:18px !important;box-shadow:0 0 0 6px rgba(24,119,242,.25),0 2px 6px rgba(0,0,0,.4) !important;}
 </style>
 </head>
 <body>
@@ -9463,14 +9462,14 @@ function lmLayer(inst){
       inst.L3 = st; st.map = map;
     },
     render(gl, matrix){
-      const map = st.map; if(!map || !inst.pos) return;
+      const map = st.map; if(!map || !inst.pos || !inst.target || !inst.fixRecv || inst.targetApprox){ if(map && inst.pos) map.triggerRepaint(); return; }
       const now = performance.now(), dt = Math.min(0.1, (now - (st.last || now)) / 1000); st.last = now;
       st.t = (st.t || 0) + dt;
       lmTick(inst, st, dt);
       if(inst.far){ map.triggerRepaint(); return; }
       const mc = maplibregl.MercatorCoordinate.fromLngLat([inst.pos.lng, inst.pos.lat], 0);
       const mpp = 156543.03392 * Math.cos(inst.pos.lat * Math.PI / 180) / Math.pow(2, map.getZoom());
-      const K = Math.max(1, inst.px * mpp / 1.75);
+      const K = Math.min(60, Math.max(1, inst.px * mpp / 1.75));
       const sc = mc.meterInMercatorCoordinateUnits() * K * 0.6;
       const m = new T.Matrix4().fromArray(matrix);
       const l = new T.Matrix4().makeTranslation(mc.x, mc.y, mc.z).scale(new T.Vector3(sc, -sc, sc)).multiply(new T.Matrix4().makeRotationAxis(new T.Vector3(1, 0, 0), Math.PI / 2));
@@ -9524,7 +9523,7 @@ function lmTick(inst, st, dt){
   st.ring.scale.setScalar(1 + pulse * 1.6); st.ringMat.opacity = 0.75 * (1 - pulse);
   st.ringMat.color.set(LM_KIND[kind].col);
   inst.px = lmPx(st.map.getZoom());
-  inst.far = st.map.getZoom() < 13.2;
+  inst.far = st.map.getZoom() < 14.5;
   if(inst.dotEl){ inst.dotEl.style.display = inst.far ? 'block' : 'none'; inst.dotEl.style.setProperty('--c', LM_KIND[kind].col); }
   if(inst.tagMk){
     inst.tagMk.setLngLat([inst.pos.lng, inst.pos.lat]); if(inst.dotMk) inst.dotMk.setLngLat([inst.pos.lng, inst.pos.lat]);
@@ -9612,7 +9611,7 @@ function lmSwitchStyle(inst){
 
 function lmInit(inst){
   const el = inst.node.querySelector('[data-map]');
-  const map = inst.map = new maplibregl.Map({ container:el, style:lmSatStyle(), center:[31.0522, -17.8292], zoom:15.5, pitch:60, bearing:-20, maxPitch:80, maxZoom:21, attributionControl:false, antialias:true, fadeDuration:120, maxTileCacheSize:200, renderWorldCopies:false });
+  const map = inst.map = new maplibregl.Map({ container:el, style:lmSatStyle(), center:[31.0522, -17.8292], zoom:15.5, pitch:65, bearing:-20, maxPitch:80, maxZoom:21, attributionControl:false, antialias:true, fadeDuration:120, maxTileCacheSize:200, renderWorldCopies:false });
   map.addControl(new maplibregl.AttributionControl({ compact:true }), 'bottom-right');
   map.addControl(new maplibregl.NavigationControl({ showZoom:false, visualizePitch:true }), 'top-left');
   map.on('style.load', () => lmAddStuff(inst));
@@ -9699,7 +9698,7 @@ function lmNoLocation(inst){
 function lmDrawMe(inst){
   if(!inst.map || !inst.me || inst.mine) return;
   if(inst.meMk){ inst.meMk.setLngLat([inst.me.lng, inst.me.lat]); return; }
-  const e = document.createElement('div'); e.className = 'lm-me'; e.innerHTML = '<svg viewBox="0 0 24 40" width="16" height="28" aria-label="You"><circle cx="12" cy="6" r="5" fill="#0B3D91"/><path d="M5 14c0-2 2-3 4-3h6c2 0 4 1 4 3v10l-2.5 1V38a1.5 1.5 0 0 1-3 0V27h-1v11a1.5 1.5 0 0 1-3 0V25L5 24z" fill="#0B3D91"/></svg>';
+  const e = document.createElement('div'); e.className = 'lm-me'; e.innerHTML = '';
   inst.meMk = new maplibregl.Marker({ element:e, anchor:'center' }).setLngLat([inst.me.lng, inst.me.lat]).addTo(inst.map);
 }
 
